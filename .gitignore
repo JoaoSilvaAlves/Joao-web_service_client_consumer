@@ -1,6 +1,7 @@
 *.docx
 *.png
 *.jpg
+*.xlsx
 
 # Prerequisites
 *.d
@@ -34,3 +35,4 @@
 *.exe
 *.out
 *.app
+/web_meteo/nbproject/private/
