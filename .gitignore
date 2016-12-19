@@ -1,4 +1,6 @@
 *.docx
+*.png
+*.jpg
 
 # Prerequisites
 *.d
