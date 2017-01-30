@@ -1,26 +1,48 @@
 <?php
 require_once 'ApiSimpleGetRestClient.php';
 $client = new ApiSimpleGetRestClient('http://www.prevision-meteo.ch/services/json');
-$response = $client->get('Neuchatel');
+$response = $client->get('Neuchâtel');
 $data = json_decode(($response), True);
 
-//Affichage de la météo sur 5 jours pour Neuchâtel
-echo 'Ville : ' . $data['city_info']['name'] . '</br>';
-echo 'Date du jour : ' . $data['fcst_day_0']['date'] . '</br>';
-echo 'Temp : ' . $data['fcst_day_0']['tmin'] . ' - ' . $data['fcst_day_0']['tmax'] . 'deg.</br>';
-echo 'Date du jour : ' . $data['fcst_day_1']['date'] . '</br>';
-echo 'Temp : ' . $data['fcst_day_1']['tmin'] . ' - ' . $data['fcst_day_1']['tmax'] . 'deg.</br>';
-echo 'Date du jour : ' . $data['fcst_day_2']['date'] . '</br>';
-echo 'Temp : ' . $data['fcst_day_2']['tmin'] . ' - ' . $data['fcst_day_2']['tmax'] . 'deg.</br>';
-echo 'Date du jour : ' . $data['fcst_day_3']['date'] . '</br>';
-echo 'Temp : ' . $data['fcst_day_3']['tmin'] . ' - ' . $data['fcst_day_3']['tmax'] . 'deg.</br>';
-echo 'Date du jour : ' . $data['fcst_day_4']['date'] . '</br>';
-echo 'Temp : ' . $data['fcst_day_4']['tmin'] . ' - ' . $data['fcst_day_4']['tmax'] . 'deg.</br>' . '</br>';
+if (isset($_POST["dropDown_DaysNumber"])) {
+    
+}
 
-//var_dump($data);
-//var_dump($data['fcst_day_0']['hourly_data']['14H00']);
+function VerifCityExists() {
+    if (isset($_POST["v_CityToAdd"])) {
+        AddCityToList($_POST["v_CityToAdd"]);
+    }
+}
 
-$numCity = 4;
+function AddCityToList($CityToAdd)
+{
+    echo '<label>';
+    echo '<input="checkbox" name="check_list[""value="' . $CityToAdd . '/>' . $CityToAdd . '</label>';
+}
+
+//Test d'existence, si variable vide et si le contenu ne dépasse pas 6 objets,
+//appel de fonction qui ira construire les zones d'affichage pour la météo
+function CallForTables() {
+    if (isset($_POST['check_list'])) {
+        if (!empty($_POST['check_list'])) {
+            if (count($_POST['check_list']) <= 6) {
+                foreach ($_POST['check_list'] as $check) {
+                    AddCityForecast($check, $_POST["dropDown_DaysNumber"]);
+                }
+            } else {
+                echo 'Vous ne pouvez choisir que 6 villes au même temps.';
+            }
+        } else {
+            echo 'Veuillez sélectionner des villes à afficher' . '</br>';
+        }
+    } else {
+        
+    }
+}
+
+function AddCityForecast($NameCity, $NumberDays) {
+    
+}
 ?>
 
 <script>
@@ -38,8 +60,7 @@ $numCity = 4;
             expanded = false;
         }
     }
-
-    document.cookie = sChaine;
+    //document.cookie = sChaine;
 </script>
 
 <html>
@@ -49,10 +70,6 @@ $numCity = 4;
         <link href="css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
         <script src="js/bootstrap.min.js" type="text/javascript"></script>
         <link href="css/cssPerso.css" rel="stylesheet" type="text/css"/>
-        
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
-<script type="text/javascript" src="js/bootstrap-3.1.1.min.js"></script>
-<script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
 
         <title>Web Service Client Consumer</title>
     </header>
@@ -61,10 +78,10 @@ $numCity = 4;
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12">
-                    <form class="formVilles">
+                    <form class="formVilles" method="post">
                         <div class="col-md-3">
                             <label for="ajouterVille">
-                                Ville à ajouter à la liste
+                                Ville(s) à afficher
                             </label>
                         </div>
 
@@ -77,31 +94,28 @@ $numCity = 4;
                                 <div class="selectBox" onclick="showCheckboxes()">
 
                                     <div class="overSelect dropdown"></div>
-                                    <select name="dropDown_Cities">
-                                        <option>Sélection</option>
+                                    <select>
+                                        <option></option>
                                     </select>
                                 </div>
                                 <div>
                                     <div id="checkboxes">
-                                        <label for="1">
-                                            <input type="checkbox" id="1" checked/> Neuchâtel</label>
-                                        <label for="2">
-                                            <input type="checkbox" id="2" /> La Chaux-de-Fonds</label>
-                                        <label for="3">
-                                            <input type="checkbox" id="3" /> Berne</label>
-                                        <label for="4">
-                                            <input type="checkbox" id="4" /> Lausanne</label>
+                                        <label>
+                                            <input type="checkbox"  name="check_list[]" value="Neuchâtel" /> Neuchâtel</label>
+                                        <label>
+                                            <input type="checkbox"  name="check_list[]" value="La-Chaux-de-Fonds"/> La Chaux-de-Fonds</label>
+                                        <label>
+                                            <input type="checkbox"  name="check_list[]" value="Bern"/> Berne</label>
+                                        <label>
+                                            <input type="checkbox"  name="check_list[]" value="Lausanne"/> Lausanne</label>
                                         <?php
-                                        echo '  <label for="5">
-                                                        <input type="checkbox" id="5" />  Geneve</label>';
-
-                                        global $numCity;
+                                        VerifCityExists();
                                         ?>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Dropdown pour nombre de jours à afficher -->
                         <div class="col-md-1">
                             <select name="dropDown_DaysNumber">
@@ -112,63 +126,23 @@ $numCity = 4;
                                 <option>5</option>
                             </select>
                         </div>
-                        
+
                         <!-- Bouton recharger après sélection de villes à afficher -->
                         <div class="col-md-2">
                             <button type="submit" class="btn btn-default"> Recharger </button>
                         </div>
 
-                        
+
                     </form>
                 </div>
             </div>
         </div>
-        
-        <form id="form1">
 
-<div style="padding:20px">
-
-<select id="chkveg" multiple="multiple">
-
-    <option value="cheese">Cheese</option>
-    <option value="tomatoes">Tomatoes</option>
-    <option value="mozarella">Mozzarella</option>
-    <option value="mushrooms">Mushrooms</option>
-    <option value="pepperoni">Pepperoni</option>
-    <option value="onions">Onions</option>
-
-</select>
-
-<br /><br />
-
-<input type="button" id="btnget" value="Get Selected Values" />
-
-<script type="text/javascript">
-
-$(function() {
-
-    $('#chkveg').multiselect({
-
-        includeSelectAllOption: true
-    });
-
-    $('#btnget').click(function(){
-
-        alert($('#chkveg').val());
-    });
-});
-
-</script>
-
-</div>
-
-</form>
-        
         <!-- Ajouter ville à la liste déroulante, il faut entrer le nom correct de la ville !-->
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12">
-                    <form role="form">
+                    <form role="form" method="post">
                         <div class="form-group">
                             <div>
                                 <label for="ajouterVille">
@@ -176,7 +150,7 @@ $(function() {
                                 </label>
                             </div>
                             <div class="col-md-3">
-                                <input type="text" class="form-control" />
+                                <input type="text" class="form-control" name="v_CityToAdd"/>
                             </div>
                             <div class="col-md-3">
 
@@ -188,11 +162,12 @@ $(function() {
                 </div>
             </div>
         </div>
+
         <!-- Enlever ville de la liste déroulante, il faut entrer le nom correct de la ville !-->
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12">
-                    <form role="form">
+                    <form role="form" method="post">
                         <div class="form-group">
                             <div>
                                 <label for="enleverVille">
@@ -200,7 +175,7 @@ $(function() {
                                 </label>
                             </div>
                             <div class="col-md-3">
-                                <input type="text" class="form-control"/>
+                                <input type="text" class="form-control" name="v_CityToDelete"/>
                             </div>
                             <div class="col-md-3">
                                 <button type="submit" class="btn btn-default "> - </button>
@@ -208,53 +183,71 @@ $(function() {
                         </div>
                     </form>     
                 </div>
-
-                <div class="col-md-12 ">
-                    <hr class="traitHorizontal">
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="row">
-                            <div class="col-md-3">
-                            </div>
-                            <div class="col-md-3">
-                            </div>
-                            <div class="col-md-3">
-                            </div>
-                            <div class="col-md-3">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="row">
-                            <div class="col-md-3">
-                            </div>
-                            <div class="col-md-3">
-                            </div>
-                            <div class="col-md-3">
-                            </div>
-                            <div class="col-md-3">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="row">
-                            <div class="col-md-3">
-                            </div>
-                            <div class="col-md-3">
-                            </div>
-                            <div class="col-md-3">
-                            </div>
-                            <div class="col-md-3">
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
+        </div>
 
-            <br>
-            </body>
-            <footer>
+        <!-- Partie affichage des données météo pour les différentes villes sélectionnées précédemment !--> 
+        <div class="col-md-12 ">
+            <hr class="traitHorizontal">
+        </div>
 
-            </footer>
+        <?php
+        CallForTables();
+        ?>
+        <style>
+            .tg  {border-collapse:collapse;border-spacing:0;border-width:2px;border-style:solid; margin-left: 10px;text-align: center;}
+            .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 16px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;}
+            .tg th{font-family:Arial, sans-serif;font-size:18px;font-weight:normal;padding:10px 16px;border-style:solid;border-width:2px;overflow:hidden;word-break:normal;text-align: center;font-weight: bold;}
+            .tg .tg-jsj9{font-size:16px;font-family:"Comic Sans MS", cursive, sans-serif !important;;text-align:center;vertical-align:top}
+            .tg .tg-by1k{font-weight:bold;font-size:18px;font-family:"Comic Sans MS", cursive, sans-serif !important;;text-align:center;vertical-align:top}
+            .tg .tg-yw4l{vertical-align:top}
+        </style>
+
+        <div class="col-md-12 ">
+            <div class="row">
+                <table class="tg">
+                    <tr>
+                        <th class="tg-baqh" colspan="4"><?php echo 'Météo ' . $data['city_info']['name'] ?></th>
+                    </tr>
+                    <tr>
+                        <td class="tg-baqh" colspan="4">Aujourd'hui</td>
+                    </tr>
+                    <tr>
+                        <td class="tg-yw4l"><?php echo $data['fcst_day_0']['tmin'] ?></td>
+                        <td class="tg-yw4l" colspan="3" rowspan="2"><?php echo '<img src="' . $data['current_condition']['icon'] . '"</img>' ?></td>
+                    </tr>
+                    <tr>
+                        <td class="tg-yw4l"><?php echo $data['fcst_day_0']['tmax'] ?></td>
+                    </tr>
+                    <tr>
+                        <td class="tg-yw4l"><?php echo $data['fcst_day_1']['day_long'] ?></td>
+                        <td class="tg-yw4l"><?php echo $data['fcst_day_1']['tmin'] ?></td>
+                        <td class="tg-yw4l"><?php echo $data['fcst_day_1']['tmax'] ?></td>
+                        <td class="tg-yw4l"><?php echo '<img src="' . $data['fcst_day_1']['icon'] . '"</a>' ?></td>
+                    </tr>
+                    <tr>
+                        <td class="tg-yw4l"><?php echo $data['fcst_day_2']['day_long'] ?></td>
+                        <td class="tg-yw4l"><?php echo $data['fcst_day_2']['tmin'] ?></td>
+                        <td class="tg-yw4l"><?php echo $data['fcst_day_2']['tmax'] ?></td>
+                        <td class="tg-yw41"><?php echo '<img src="' . $data['fcst_day_2']['icon'] . '" style="width:100%"</a>' ?></td>
+                    </tr>
+                    <tr>
+                        <td class="tg-yw4l"><?php echo $data['fcst_day_3']['day_long'] ?></td>
+                        <td class="tg-yw4l"><?php echo $data['fcst_day_3']['tmin'] ?></td>
+                        <td class="tg-yw4l"><?php echo $data['fcst_day_3']['tmax'] ?></td>
+                        <td class="tg-yw4l"><?php echo '<img src="' . $data['fcst_day_3']['icon'] . '"</a>' ?></td>
+                    </tr>
+                    <tr>
+                        <td class="tg-yw4l"><?php echo $data['fcst_day_4']['day_long'] ?></td>
+                        <td class="tg-yw4l"><?php echo $data['fcst_day_4']['tmin'] ?></td>
+                        <td class="tg-yw4l"><?php echo $data['fcst_day_4']['tmax'] ?></td>
+                        <td class="tg-yw4l"><?php echo '<img src="' . $data['fcst_day_4']['icon'] . '"</a>' ?></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+    <footer>
+
+    </footer>
 </html>
