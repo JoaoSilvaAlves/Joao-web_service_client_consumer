@@ -64,24 +64,22 @@ function AddCityForecast($NameCity, $NumberDays) {
     $client = new ApiSimpleGetRestClient('http://www.prevision-meteo.ch/services/json');
     $responseAdd = $client->get($NameCity);
     $data = json_decode(($responseAdd), True);
-
-    echo '<div class="col-md-4"><div class="row"><table class="tg"><tr>';
+    echo '<div class="col-md-4"><table class="tg" style="margin-bottom:10px;"><tr>';
     echo '<th class="tg-baqh" colspan="4">Météo ' . $data['city_info']['name'] . '</th></tr>';
-    echo "<tr><td class='tg-baqh' colspan='4'>Aujourd'hui</td></tr>";
-
-    echo '<tr><td class="tg-yw4l">' . $data['fcst_day_0']['tmin'] . '</td>';
-    echo '<td class="tg-yw4l" colspan="3" rowspan="2">' . '<img src="' . $data['current_condition']['icon'] . '"</img></td></tr>';
-    echo '<tr><td class="tg-yw4l">' . $data['fcst_day_0']['tmax'] . '</td></tr>';
+    echo '<tr><td class="tg-baqh" colspan="4" style="font-size:18px;">Aujourd\'hui</td></tr>';
+    echo '<tr><td class="tg-yw4l" style="color:blue; text-align:right; font-size:18px; width:15px;">' . $data['fcst_day_0']['tmin'] . '</td>';
+    echo '<td class="tg-yw4l" colspan="3" rowspan="2" style="text-align:left; width:20px;">' . '<img src="' . $data['current_condition']['icon'] . '"</img></td></tr>';
+    echo '<tr><td class="tg-yw4l" style="color:red; text-align:right; font-size:18px;">' . $data['fcst_day_0']['tmax'] . '</td></tr>';
 
     if ($NumberDays != 1) {
         for ($i = 1; $i < $NumberDays; $i++) {
-            echo '<tr><td class="tg-yw4l">' . $data['fcst_day_'.$i.'']['day_long'] . '</td>';
-            echo '<td class="tg-yw4l">' . $data['fcst_day_'.$i.'']['tmin'] . '</td>';
-            echo '<td class="tg-yw4l">' . $data['fcst_day_'.$i.'']['tmax'] . '</td>';
-            echo '<td class="tg-yw4l">'.'<img src="' . $data['fcst_day_'.$i.'']['icon'] . '"</img></td></tr>';
+            echo '<tr><td class="tg-yw4l">' . $data['fcst_day_' . $i . '']['day_long'] . '</td>';
+            echo '<td class="tg-yw4l" style="color:blue;">' . $data['fcst_day_' . $i . '']['tmin'] . '</td>';
+            echo '<td class="tg-yw4l" style="color:red;">' . $data['fcst_day_' . $i . '']['tmax'] . '</td>';
+            echo '<td class="tg-yw4l">' . '<img src="' . $data['fcst_day_' . $i . '']['icon'] . '"</img></td></tr>';
         }
     }
-    echo '</div></div></table></br>';
+    echo '</table></div>';
 }
 ?>
 
@@ -105,7 +103,7 @@ function AddCityForecast($NameCity, $NumberDays) {
 <style>
     .tg  {border-collapse:collapse;border-spacing:0;border-width:2px;border-style:solid; margin-left: 10px;text-align: center;}
     .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 16px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;}
-    .tg th{font-family:Arial, sans-serif;font-size:18px;font-weight:normal;padding:10px 16px;border-style:solid;border-width:2px;overflow:hidden;word-break:normal;text-align: center;font-weight: bold;}
+    .tg th{background-color: lavender; font-family:Arial, sans-serif;font-size:18px;font-weight:normal;padding:10px 16px;border-style:solid;border-width:2px;overflow:hidden;word-break:normal;text-align: center;font-weight: bold;}
     .tg .tg-jsj9{font-size:16px;font-family:"Comic Sans MS", cursive, sans-serif !important;;text-align:center;vertical-align:top}
     .tg .tg-by1k{font-weight:bold;font-size:18px;font-family:"Comic Sans MS", cursive, sans-serif !important;;text-align:center;vertical-align:top}
     .tg .tg-yw4l{vertical-align:top}
@@ -121,7 +119,6 @@ function AddCityForecast($NameCity, $NumberDays) {
 
         <title>Web Service Client Consumer</title>
     </header>
-
     <body>
         <div class="col-md-12">
             <div class="row">
@@ -232,42 +229,16 @@ function AddCityForecast($NameCity, $NumberDays) {
             </div>
         </div>
         !-->
+
         <!-- Partie affichage des données météo pour les différentes villes sélectionnées précédemment !--> 
         <div class="col-md-12 ">
             <hr class="traitHorizontal">
         </div>
 
         <?php
+        echo '<div class="md-col-12">';
         CallForTables();
+        echo '</div>';
         ?>
-
-        <!--        <div class="col-md-12 ">
-                    <div class="row">
-                        <table class="tg">
-                            <tr>
-                                <th class="tg-baqh" colspan="4"><?php //echo 'Météo ' . $data['city_info']['name']   ?></th>
-                            </tr>
-                            <tr>
-                                <td class="tg-baqh" colspan="4">Aujourd'hui</td>
-                            </tr>
-                            <tr>
-                                <td class="tg-yw4l"><?php //echo $data['fcst_day_0']['tmin']   ?></td>
-                                <td class="tg-yw4l" colspan="3" rowspan="2"><?php //echo '<img src="' . $data['current_condition']['icon'] . '"</img>'   ?></td>
-                            </tr>
-                            <tr>
-                                <td class="tg-yw4l"><?php //echo $data['fcst_day_0']['tmax']   ?></td>
-                            </tr>
-                            <tr>
-                                <td class="tg-yw4l"><?php //echo $data['fcst_day_1']['day_long']   ?></td>
-                                <td class="tg-yw4l"><?php //echo $data['fcst_day_1']['tmin']   ?></td>
-                                <td class="tg-yw4l"><?php //echo $data['fcst_day_1']['tmax']   ?></td>
-                                <td class="tg-yw4l"><?php //echo '<img src="' . $data['fcst_day_1']['icon'] . '"</a>'   ?></td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>-->
     </body>
-    <footer>
-
-    </footer>
 </html>

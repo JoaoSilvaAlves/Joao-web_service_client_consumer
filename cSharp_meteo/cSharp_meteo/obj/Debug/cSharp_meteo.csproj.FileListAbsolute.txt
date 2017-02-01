@@ -1,0 +1,9 @@
+D:\JoaoSilvaAlves\Joao-web_service_client_consumer\cSharp_meteo\cSharp_meteo\bin\Debug\cSharp_meteo.exe.config
+D:\JoaoSilvaAlves\Joao-web_service_client_consumer\cSharp_meteo\cSharp_meteo\bin\Debug\cSharp_meteo.exe
+D:\JoaoSilvaAlves\Joao-web_service_client_consumer\cSharp_meteo\cSharp_meteo\bin\Debug\cSharp_meteo.pdb
+D:\JoaoSilvaAlves\Joao-web_service_client_consumer\cSharp_meteo\cSharp_meteo\obj\Debug\cSharp_meteo.csprojResolveAssemblyReference.cache
+D:\JoaoSilvaAlves\Joao-web_service_client_consumer\cSharp_meteo\cSharp_meteo\obj\Debug\cSharp_meteo.Properties.Resources.resources
+D:\JoaoSilvaAlves\Joao-web_service_client_consumer\cSharp_meteo\cSharp_meteo\obj\Debug\cSharp_meteo.csproj.GenerateResource.Cache
+D:\JoaoSilvaAlves\Joao-web_service_client_consumer\cSharp_meteo\cSharp_meteo\obj\Debug\cSharp_meteo.exe
+D:\JoaoSilvaAlves\Joao-web_service_client_consumer\cSharp_meteo\cSharp_meteo\obj\Debug\cSharp_meteo.pdb
+D:\JoaoSilvaAlves\Joao-web_service_client_consumer\cSharp_meteo\cSharp_meteo\obj\Debug\cSharp_meteo.Form1.resources
