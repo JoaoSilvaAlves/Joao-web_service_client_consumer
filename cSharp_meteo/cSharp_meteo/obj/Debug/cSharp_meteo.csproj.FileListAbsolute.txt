@@ -29,3 +29,5 @@ G:\saisonscpln\3emeAnnee\saison1\atelier_Sacchetti\Joao-web_service_client_consu
 G:\saisonscpln\3emeAnnee\saison1\atelier_Sacchetti\Joao-web_service_client_consumer\cSharp_meteo\cSharp_meteo\obj\Debug\cSharp_meteo.Form1.resources
 G:\saisonscpln\3emeAnnee\saison1\atelier_Sacchetti\Joao-web_service_client_consumer\cSharp_meteo\cSharp_meteo\obj\Debug\cSharp_meteo.Properties.Resources.resources
 G:\saisonscpln\3emeAnnee\saison1\atelier_Sacchetti\Joao-web_service_client_consumer\cSharp_meteo\cSharp_meteo\obj\Debug\cSharp_meteo.csproj.GenerateResource.Cache
+D:\JoaoSilvaAlves\Joao-web_service_client_consumer\cSharp_meteo\cSharp_meteo\bin\Debug\Newtonsoft.Json.dll
+D:\JoaoSilvaAlves\Joao-web_service_client_consumer\cSharp_meteo\cSharp_meteo\bin\Debug\Newtonsoft.Json.xml

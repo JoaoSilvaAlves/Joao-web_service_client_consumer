@@ -89,9 +89,18 @@ namespace cSharp_meteo
             {
                 if (tbx_EnterCityToAdd.Text != "")
                 {
-                    cbx_ChooseCity.Items.Add(tbx_EnterCityToAdd.Text);
-                    WriteFileCityName(tbx_EnterCityToAdd.Text);
-                    tbx_EnterCityToAdd.Text = "";
+                    DialogResult dialogResult = MessageBox.Show("La ville suivante sera ajoutée à l'application : " + tbx_EnterCityToAdd.Text, "Confirmation", MessageBoxButtons.OKCancel);
+                    if (dialogResult == DialogResult.OK)
+                    {
+                        MessageBox.Show("Ajout effectué !");
+                        cbx_ChooseCity.Items.Add(tbx_EnterCityToAdd.Text);
+                        WriteFileCityName(tbx_EnterCityToAdd.Text);
+                        tbx_EnterCityToAdd.Text = "";
+                    }
+                    else if(dialogResult == DialogResult.Cancel)
+                    {
+                        MessageBox.Show("Ajout annulé !");
+                    }
                 }
                 else
                 {
@@ -111,18 +120,18 @@ namespace cSharp_meteo
         /// </summary>
         /// <param name="CityName"></param>
         /// <param name="nbjours"></param>
-        private void GetCurrencyWeather(string strCityName, string strDays)
+        private void GetCurrencyWeather(string str_CityName, string str_Days)
         {
             Weather WeatherResponse = new Weather();
-            int iNbDays = Convert.ToInt32(strDays);
+            int i_NbDays = Convert.ToInt32(str_Days);
             
 
             try
             {
-                grpBox_Forecast.Text = strCityName;
+                grpBox_Forecast.Text = str_CityName;
 
                 //Requête de la météo au service web météo
-                string endPoint = @"http://www.prevision-meteo.ch/services/json/" + strCityName;
+                string endPoint = @"http://www.prevision-meteo.ch/services/json/" + str_CityName;
                 var client = new RestClient(endPoint);
                 var json = client.MakeRequest();
                 object objResponse = JsonConvert.DeserializeObject(json, typeof(Weather));
@@ -166,45 +175,45 @@ namespace cSharp_meteo
                 
                 if (WeatherResponse != null)
                 {                 
-                    Label labelDayHead = new Label();
-                    labelDayHead.Left = 15;
-                    labelDayHead.Top = 35;
-                    labelDayHead.Width = 40;
-                    labelDayHead.Height = 20;
-                    labelDayHead.Text = "Jour";
-                    labelDayHead.Font = new Font("Microsoft Sans Serif",12);
+                    Label lbl_DayHead = new Label();
+                    lbl_DayHead.Left = 15;
+                    lbl_DayHead.Top = 35;
+                    lbl_DayHead.Width = 40;
+                    lbl_DayHead.Height = 20;
+                    lbl_DayHead.Text = "Jour";
+                    lbl_DayHead.Font = new Font("Microsoft Sans Serif",12);
 
-                    Label labelTMinHead = new Label();
-                    labelTMinHead.Left = 80;
-                    labelTMinHead.Top = 35;
-                    labelTMinHead.Width = 80;
-                    labelTMinHead.Height = 20;
-                    labelTMinHead.Text = "T. Min";
-                    labelTMinHead.Font = new Font("Microsoft Sans Serif", 12);
+                    Label lbl_TMinHead = new Label();
+                    lbl_TMinHead.Left = 80;
+                    lbl_TMinHead.Top = 35;
+                    lbl_TMinHead.Width = 80;
+                    lbl_TMinHead.Height = 20;
+                    lbl_TMinHead.Text = "T. Min";
+                    lbl_TMinHead.Font = new Font("Microsoft Sans Serif", 12);
 
-                    Label labelTMaxHead = new Label();
-                    labelTMaxHead.Left = 160;
-                    labelTMaxHead.Top = 35;
-                    labelTMaxHead.Width = 80;
-                    labelTMaxHead.Height = 20;
-                    labelTMaxHead.Text = "T. Max";
-                    labelTMaxHead.Font = new Font("Microsoft Sans Serif", 12);
+                    Label lbl_TMaxHead = new Label();
+                    lbl_TMaxHead.Left = 160;
+                    lbl_TMaxHead.Top = 35;
+                    lbl_TMaxHead.Width = 80;
+                    lbl_TMaxHead.Height = 20;
+                    lbl_TMaxHead.Text = "T. Max";
+                    lbl_TMaxHead.Font = new Font("Microsoft Sans Serif", 12);
 
-                    Label labelIconHead = new Label();
-                    labelIconHead.Left = 250;
-                    labelIconHead.Top = 35;
-                    labelIconHead.Width = 80;
-                    labelIconHead.Height = 20;
-                    labelIconHead.Text = "Image";
-                    labelIconHead.Font = new Font("Microsoft Sans Serif", 12);
+                    Label lbl_IconHead = new Label();
+                    lbl_IconHead.Left = 250;
+                    lbl_IconHead.Top = 35;
+                    lbl_IconHead.Width = 80;
+                    lbl_IconHead.Height = 20;
+                    lbl_IconHead.Text = "Image";
+                    lbl_IconHead.Font = new Font("Microsoft Sans Serif", 12);
 
-                    grpBox_Forecast.Controls.Add(labelDayHead);
-                    grpBox_Forecast.Controls.Add(labelTMinHead);
-                    grpBox_Forecast.Controls.Add(labelTMaxHead);
-                    grpBox_Forecast.Controls.Add(labelIconHead);
+                    grpBox_Forecast.Controls.Add(lbl_DayHead);
+                    grpBox_Forecast.Controls.Add(lbl_TMinHead);
+                    grpBox_Forecast.Controls.Add(lbl_TMaxHead);
+                    grpBox_Forecast.Controls.Add(lbl_IconHead);
 
                     //Pour chaque jour que l'on souhaite voir, créer une ligne de labels pour un jour précis
-                    for (int i = 0; i < iNbDays; i++)
+                    for (int i = 0; i < i_NbDays; i++)
                     {
                        /* A changer pour que l'actualisation se fasse bien au niveau des informations du temps*/
                         lbl_Days = new Label();
@@ -218,13 +227,13 @@ namespace cSharp_meteo
                         grpBox_Forecast.Controls.Add(pcb_Icon);
 
                         lbl_Days.Text = Days[i];
-                        lbl_Days.Left = labelDayHead.Left;
+                        lbl_Days.Left = lbl_DayHead.Left;
                         lbl_Days.Top = 80 + (i * 50);
                         lbl_Days.Width = 80;
                         lbl_Days.Height = 20;
 
                         lbl_TMin.Text = TemperatureMin[i];
-                        lbl_TMin.Left = labelTMinHead.Left + 30;
+                        lbl_TMin.Left = lbl_TMinHead.Left + 30;
                         lbl_TMin.Top = 80 + (i * 50);
                         lbl_TMin.Width = 60;
                         lbl_TMin.Height = 20;
@@ -232,7 +241,7 @@ namespace cSharp_meteo
                         lbl_TMin.TextAlign = ContentAlignment.MiddleLeft;
 
                         lbl_TMax.Text = TemperatureMax[i];
-                        lbl_TMax.Left = labelTMaxHead.Left;
+                        lbl_TMax.Left = lbl_TMaxHead.Left;
                         lbl_TMax.Top = 80 + (i * 50);
                         lbl_TMax.Width = 60;
                         lbl_TMax.Height = 20;
@@ -240,7 +249,7 @@ namespace cSharp_meteo
                         lbl_TMax.TextAlign = ContentAlignment.MiddleCenter;
 
                         pcb_Icon.Load(ImgIcone[i]);
-                        pcb_Icon.Left = labelIconHead.Left;
+                        pcb_Icon.Left = lbl_IconHead.Left;
                         pcb_Icon.Top = 70 + (i * 50);
                         
                     }
@@ -264,15 +273,13 @@ namespace cSharp_meteo
         {
             try
             {
-                string path = @"C:\Temp\cities.txt";
-
-                if (!File.Exists(path))
+                string str_path = @"C:\Temp\cities.txt";
+                
+                //Ouverture de fichier texte
+                using (System.IO.StreamWriter file =
+                    new System.IO.StreamWriter(str_path, true))
                 {
-                    using (System.IO.StreamWriter file =
-                        new System.IO.StreamWriter(path, true))
-                    {
-                        file.WriteLine(CityName);
-                    }
+                    file.WriteLine(CityName);
                 }
             }
             catch(Exception ex)
@@ -288,16 +295,16 @@ namespace cSharp_meteo
         {
             try 
             {
-                string[] lines = System.IO.File.ReadAllLines(@"C:\Temp\cities.txt");
+                    string[] lines = System.IO.File.ReadAllLines(@"C:\Temp\cities.txt");
 
-                foreach (string line in lines)
-                {
-                    cbx_ChooseCity.Items.Add(line.ToString());
-                }
+                    foreach (string line in lines)
+                    {
+                        cbx_ChooseCity.Items.Add(line.ToString());
+                    }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+               
             }
         }
     }

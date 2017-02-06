@@ -56,7 +56,7 @@
             this.lbl_ChooseDays.Location = new System.Drawing.Point(199, 13);
             this.lbl_ChooseDays.Name = "lbl_ChooseDays";
             this.lbl_ChooseDays.Size = new System.Drawing.Size(125, 20);
-            this.lbl_ChooseDays.TabIndex = 1;
+            this.lbl_ChooseDays.TabIndex = 0;
             this.lbl_ChooseDays.Text = "Nombre de jours";
             // 
             // cbx_ChooseCity
@@ -67,7 +67,7 @@
             this.cbx_ChooseCity.Location = new System.Drawing.Point(17, 46);
             this.cbx_ChooseCity.Name = "cbx_ChooseCity";
             this.cbx_ChooseCity.Size = new System.Drawing.Size(161, 28);
-            this.cbx_ChooseCity.TabIndex = 2;
+            this.cbx_ChooseCity.TabIndex = 1;
             this.cbx_ChooseCity.SelectedIndexChanged += new System.EventHandler(this.cbx_ChoixVille_SelectedIndexChanged);
             // 
             // lbl_EnterCityToAdd
@@ -77,7 +77,7 @@
             this.lbl_EnterCityToAdd.Location = new System.Drawing.Point(13, 96);
             this.lbl_EnterCityToAdd.Name = "lbl_EnterCityToAdd";
             this.lbl_EnterCityToAdd.Size = new System.Drawing.Size(165, 20);
-            this.lbl_EnterCityToAdd.TabIndex = 5;
+            this.lbl_EnterCityToAdd.TabIndex = 0;
             this.lbl_EnterCityToAdd.Text = "Ville à ajouter à la liste";
             // 
             // tbx_EnterCityToAdd
@@ -86,7 +86,7 @@
             this.tbx_EnterCityToAdd.Location = new System.Drawing.Point(17, 128);
             this.tbx_EnterCityToAdd.Name = "tbx_EnterCityToAdd";
             this.tbx_EnterCityToAdd.Size = new System.Drawing.Size(161, 26);
-            this.tbx_EnterCityToAdd.TabIndex = 6;
+            this.tbx_EnterCityToAdd.TabIndex = 2;
             // 
             // btn_AddCity
             // 
@@ -94,7 +94,7 @@
             this.btn_AddCity.Location = new System.Drawing.Point(203, 128);
             this.btn_AddCity.Name = "btn_AddCity";
             this.btn_AddCity.Size = new System.Drawing.Size(28, 26);
-            this.btn_AddCity.TabIndex = 7;
+            this.btn_AddCity.TabIndex = 4;
             this.btn_AddCity.Text = "+";
             this.btn_AddCity.UseVisualStyleBackColor = true;
             this.btn_AddCity.Click += new System.EventHandler(this.btn_Ajouter_Click);
@@ -107,7 +107,7 @@
             this.cbx_ChooseDays.Location = new System.Drawing.Point(203, 46);
             this.cbx_ChooseDays.Name = "cbx_ChooseDays";
             this.cbx_ChooseDays.Size = new System.Drawing.Size(39, 28);
-            this.cbx_ChooseDays.TabIndex = 10;
+            this.cbx_ChooseDays.TabIndex = 2;
             this.cbx_ChooseDays.SelectedIndexChanged += new System.EventHandler(this.cbx_ChooseDays_SelectedIndexChanged);
             // 
             // label1
@@ -117,7 +117,7 @@
             this.label1.Location = new System.Drawing.Point(12, 170);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(302, 2);
-            this.label1.TabIndex = 11;
+            this.label1.TabIndex = 0;
             // 
             // grpBox_Forecast
             // 
@@ -125,8 +125,9 @@
             this.grpBox_Forecast.Location = new System.Drawing.Point(12, 187);
             this.grpBox_Forecast.Name = "grpBox_Forecast";
             this.grpBox_Forecast.Size = new System.Drawing.Size(302, 354);
-            this.grpBox_Forecast.TabIndex = 12;
+            this.grpBox_Forecast.TabIndex = 0;
             this.grpBox_Forecast.TabStop = false;
+            this.grpBox_Forecast.Text = "Sélectionnez une ville";
             // 
             // Form1
             // 
